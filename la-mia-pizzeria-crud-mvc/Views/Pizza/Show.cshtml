@@ -1,0 +1,13 @@
+﻿@using la_mia_pizzeria_crud_mvc.Data;
+@model Pizza;
+<section class="p-5 bg-light">
+    <div class="card mb-3">
+        <img src="@Model.ImgPath" class="card-img-top" alt="@Model.Name">
+        <div class="card-body">
+            <h5 class="@Model.Name"></h5>
+            <p class="card-text">@Model.Description</p>
+            <span class="d-block">€@Model.Price.ToString("F2")</span>
+            <a href="@Url.Action("Index", "Pizza")" class="btn btn-primary">Home</a>
+        </div>
+    </div>
+</section>
