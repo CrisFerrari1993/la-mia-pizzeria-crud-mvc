@@ -37,7 +37,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Pizza data)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(data);
             }
@@ -51,6 +51,53 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public IActionResult Update(int id)
+        {
+            var pizzaToEdit = PizzaManager.GetPizza(id);
+
+            if (pizzaToEdit == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(pizzaToEdit);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int id, Pizza data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Update", data);
+            }
+
+            bool res = PizzaManager.UpdatePizza(id, pizzaToEdit =>
+            {
+                pizzaToEdit.Name = data.Name;
+                pizzaToEdit.Description = data.Description;
+                pizzaToEdit.Price = data.Price;
+            });
+
+            if (res == true)
+                return RedirectToAction("Index");
+            else
+                return NotFound();
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            if (PizzaManager.DeletePizza(id))
+                return RedirectToAction("Index");
+            else
+                return NotFound();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

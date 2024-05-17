@@ -1,6 +1,6 @@
 ﻿@using la_mia_pizzeria_crud_mvc.Data;
 @model List<Pizza>
-<div class="row bg-light">
+<div class="row bg-light py-4">
     @foreach(var pizza in Model)
 {
     <div class="col-sm-12 col-md-4 col-xl-3">
@@ -10,6 +10,13 @@
                     <h5 class="fw-bold">@pizza.Name</h5>
                     <span class="d-block">€@pizza.Price.ToString("F2")</span>
                     <a href="@Url.Action("Show", "Pizza", new {id = pizza.PizzaId})" class="btn btn-primary">Dettagli</a>
+                    <a href="@Url.Action("Update", "Pizza", new { id = pizza.PizzaId})" class="btn btn-success">Modifica</a>
+                        <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.PizzaId" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-sm my-1">
+                                Elimina
+                            </button>
+                        </form>
                 </div>
             </div>
     </div>
