@@ -39,7 +39,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return View("Create", data);
+                return View(data);
             }
 
             using (PizzaContext db = new PizzaContext())
